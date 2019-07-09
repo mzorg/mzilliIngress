@@ -16,3 +16,17 @@ spec:
         backend:
           serviceName: node-svc
           servicePort: 3000
+  - host: mzilli.tk
+    http:
+      paths:
+      - path: /products
+        backend:
+          serviceName: product-svc
+          servicePort: 3000
+  - host: mzilli.tk
+    http:
+      paths:
+      - path: /orders
+        backend:
+          serviceName: order-svc
+          servicePort: 3000
