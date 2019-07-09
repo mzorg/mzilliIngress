@@ -1,21 +1,36 @@
-node {
-    def Namespace = "default"
-      try {
-        stage('Checkout') {
-            checkout scm
-            sh "git rev-parse --short HEAD > .git/commit-id"
-            imageTag= readFile('.git/commit-id').trim()
-        }
+pipeline {
+    agent any
+    environment {
+        def Namespace = "default"
+        def Namespace_dev = "develop"
+        def imageTag_i = sh "git rev-parse --short HEAD > .git/commit-id"
+        imageTag = readFile('.git/commit-id').trim()
+    }
+    stages {
         stage('Environment') {
-            sh 'git --version'
-            echo "Branch: ${env.BRANCH_NAME}"
-            sh 'printenv'
+            steps {
+                sh 'git --version'
+                echo "Branch: ${env.BRANCH_NAME}"
+                sh 'docker -v'
+                sh 'printenv'
+            }
         }
-        stage('Deploy on K8s'){
-            sh "kubectl apply -f ./ingress.yaml -n ${Namespace}"
+        stage('Deploy on K8s for development'){
+            // when {
+            //     branch 'develop' 
+            // }
+            steps {
+                sh "kubectl apply -f ./ingress.yaml -n ${env.Namespace_dev}"
+            }
         }
-    } catch (err) {
-        currentBuild.result = 'FAILURE'
-        throw err
+        stage('Deploy on K8s for production'){
+            // when {
+            //     branch 'master' 
+            // }
+            steps {
+                sh "kubectl apply -f ./ingress.yaml -n ${env.Namespace}"
+            }
+        }
+
     }
 }
