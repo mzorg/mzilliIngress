@@ -16,7 +16,7 @@ spec:
         backend:
           serviceName: node-svc
           servicePort: 3000
-  - host: mzilli.tk
+  - host: api.mzilli.tk
     http:
       paths:
       - path: /products
