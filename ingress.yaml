@@ -27,6 +27,6 @@ spec:
     http:
       paths:
       - path: /orders
-        backend:
+        backend: 
           serviceName: order-svc
           servicePort: 3000
