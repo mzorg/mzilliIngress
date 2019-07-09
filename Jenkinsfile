@@ -20,7 +20,7 @@ pipeline {
             //     branch 'develop' 
             // }
             steps {
-                sh "kubectl apply -f ./ingress.yaml -n ${env.Namespace_dev}"
+                sh "kubectl apply -f ./ingress-dev.yaml -n ${env.Namespace_dev}"
             }
         }
         stage('Deploy on K8s for production'){
