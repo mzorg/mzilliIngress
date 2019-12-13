@@ -27,3 +27,7 @@ spec:
         backend: 
           serviceName: order-svc
           servicePort: 3000
+      - path: /users
+        backend: 
+          serviceName: user-svc
+          servicePort: 3000
